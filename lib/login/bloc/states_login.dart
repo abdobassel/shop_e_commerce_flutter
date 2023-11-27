@@ -1,12 +1,14 @@
 abstract class LoginStates {}
 
-class LoginitStates extends LoginStates {}
+class LoginitState extends LoginStates {}
 
-class LoginSuccesStates extends LoginStates {}
+class LoginSuccesState extends LoginStates {}
 
-class LoginLoadingStates extends LoginStates {}
+class LoginLoadingState extends LoginStates {}
 
-class LoginErrorStates extends LoginStates {
+class LoginErrorState extends LoginStates {
   final String error;
-  LoginErrorStates(this.error);
+  LoginErrorState(this.error);
 }
+
+class LoginChangPasswordShowState extends LoginStates {}
