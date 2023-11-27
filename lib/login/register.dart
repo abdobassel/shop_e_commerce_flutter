@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/components.dart';
-import 'package:shop_app/login/register.dart';
+import 'package:shop_app/login/login.dart';
 
-class Login extends StatefulWidget {
+class Register extends StatefulWidget {
   @override
-  State<Login> createState() => _LoginState();
+  State<Register> createState() => _RegisterState();
 }
 
-class _LoginState extends State<Login> {
+class _RegisterState extends State<Register> {
   var mailcontroller = TextEditingController();
 
   var pwcontroller = TextEditingController();
@@ -30,7 +30,7 @@ class _LoginState extends State<Login> {
               children: [
                 Center(
                   child: Text(
-                    'LogIn',
+                    'Register',
                     style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -75,6 +75,46 @@ class _LoginState extends State<Login> {
                           },
                           type: TextInputType.visiblePassword,
                           prefix: Icons.lock),
+                      DefaultTextForm(
+                          showPassfunc: () {
+                            setState(() {
+                              passwordShow = !passwordShow;
+                            });
+                          },
+                          isPassword: passwordShow,
+                          suffixIcon: passwordShow
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          controller: pwcontroller,
+                          labeltext: "Confirm Password ",
+                          validate: (value) {
+                            if (value!.isEmpty) {
+                              return 'password empty!!';
+                            }
+                            return null;
+                          },
+                          type: TextInputType.visiblePassword,
+                          prefix: Icons.lock),
+                      DefaultTextForm(
+                          showPassfunc: () {
+                            setState(() {
+                              passwordShow = !passwordShow;
+                            });
+                          },
+                          isPassword: passwordShow,
+                          suffixIcon: passwordShow
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          controller: pwcontroller,
+                          labeltext: "password",
+                          validate: (value) {
+                            if (value!.isEmpty) {
+                              return 'password empty!!';
+                            }
+                            return null;
+                          },
+                          type: TextInputType.visiblePassword,
+                          prefix: Icons.lock)
                     ],
                   ),
                 ),
@@ -93,7 +133,7 @@ class _LoginState extends State<Login> {
                         }
                       },
                       child: Text(
-                        'Login',
+                        'Register',
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
@@ -106,7 +146,7 @@ class _LoginState extends State<Login> {
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Don\'t have account?"),
+                        Text("you have an account?"),
                         SizedBox(
                           width: 5,
                         ),
@@ -114,10 +154,10 @@ class _LoginState extends State<Login> {
                             onPressed: () {
                               Navigator.pushAndRemoveUntil(context,
                                   MaterialPageRoute(builder: (context) {
-                                return Register();
+                                return Login();
                               }), (route) => true);
                             },
-                            child: Text("Rigester Now")),
+                            child: Text("Login Now")),
                       ]),
                 )
               ],

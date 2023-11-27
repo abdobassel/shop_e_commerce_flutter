@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 ThemeData lightTheme = ThemeData(
-  primarySwatch: Colors.deepOrange,
+  primarySwatch: Colors.blue,
   fontFamily: 'cairo',
   useMaterial3: true,
   progressIndicatorTheme:
