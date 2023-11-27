@@ -1,7 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/models/boardingModel.dart';
 
 class onBoardingScreen extends StatelessWidget {
   onBoardingScreen({super.key});
+
+  List<OnBoardingModel> onboardinglist = [
+    OnBoardingModel(
+        image: 'assets/images/done.png', title: 'Title 1', body: 'body 1'),
+    OnBoardingModel(
+        image: 'assets/images/friendship.png',
+        title: 'Title 2',
+        body: 'body 2'),
+    OnBoardingModel(
+        image: 'assets/images/delivery.png', title: 'Title 3', body: 'body 3'),
+  ];
   var pageController = PageController();
   @override
   Widget build(BuildContext context) {
@@ -15,8 +27,9 @@ class onBoardingScreen extends StatelessWidget {
           children: [
             Expanded(
               child: PageView.builder(
-                itemBuilder: (context, index) => ItemOnBoarding(),
-                itemCount: 3,
+                itemBuilder: (context, index) =>
+                    ItemOnBoarding(onboardinglist[index]),
+                itemCount: onboardinglist.length,
                 controller: pageController,
                 onPageChanged: (value) {},
               ),
@@ -41,21 +54,21 @@ class onBoardingScreen extends StatelessWidget {
     );
   }
 
-  Widget ItemOnBoarding() => Column(
+  Widget ItemOnBoarding(OnBoardingModel model) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(child: Image(image: AssetImage('assets/images/done.png'))),
+          Expanded(child: Image(image: AssetImage('${model.image}'))),
           SizedBox(
             height: 25,
           ),
           Text(
-            'Title board 1',
+            '${model.title}',
             style: TextStyle(fontSize: 18),
           ),
           SizedBox(
             height: 15,
           ),
-          Text('SSS SSSSSSSSS', style: TextStyle(fontSize: 14)),
+          Text('${model.body}', style: TextStyle(fontSize: 14)),
         ],
       );
 }
