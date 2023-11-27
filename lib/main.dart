@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shop_app/apiDio/apidio.dart';
 import 'package:shop_app/bloc_observer.dart';
 import 'package:shop_app/onBoaring/onboarding_screen.dart';
 import 'package:shop_app/shared/themes.dart';
 
 void main() {
+  DioHelper.init();
   Bloc.observer = MyBlocObserver();
   runApp(const Shop());
 }

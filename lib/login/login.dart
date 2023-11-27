@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:shop_app/components.dart';
 import 'package:shop_app/login/bloc/cubit_login.dart';
 import 'package:shop_app/login/bloc/states_login.dart';
@@ -50,10 +51,12 @@ class Login extends StatelessWidget {
                                     controller: emailcontroller,
                                     labeltext: "email",
                                     validate: (value) {
-                                      if (value!.isEmpty) {
-                                        return 'Email can not be empty';
+                                      if (value != null) {
+                                        if (value!.isEmpty) {
+                                          return 'Email can not be empty';
+                                        }
+                                        return null;
                                       }
-                                      return null;
                                     },
                                     type: TextInputType.emailAddress,
                                     prefix: Icons.email),
@@ -71,10 +74,21 @@ class Login extends StatelessWidget {
                                     controller: pwcontroller,
                                     labeltext: "Password",
                                     validate: (value) {
-                                      if (value!.isEmpty) {
-                                        return 'Password Is Too Short';
+                                      if (value != null) {
+                                        if (value!.isEmpty) {
+                                          return 'Password Is Too Short';
+                                        }
+                                        return null;
                                       }
-                                      return null;
+                                    },
+                                    onSubmit: (value) {
+                                      if (_formKey.currentState != null) {
+                                        if (_formKey.currentState!.validate()) {
+                                          cubit.postLogin(
+                                              email: emailcontroller.text,
+                                              password: pwcontroller.text);
+                                        }
+                                      }
                                     },
                                     type: TextInputType.visiblePassword,
                                     prefix: Icons.lock),
@@ -85,21 +99,26 @@ class Login extends StatelessWidget {
                             height: 20,
                           ),
                           Center(
-                            child: Container(
-                              width: double.infinity,
-                              color: Colors.blue,
-                              child: MaterialButton(
-                                onPressed: () {
-                                  cubit.changeShowPassword();
-                                  if (_formKey.currentState!.validate()) {
-                                    cubit.postLogin(emailcontroller.text,
-                                        pwcontroller.text);
+                            child: Conditional.single(
+                              context: context,
+                              conditionBuilder: (context) =>
+                                  state is! LoginLoadingState,
+                              widgetBuilder: (context) => DefaultButton(
+                                function: () {
+                                  if (_formKey.currentState != null) {
+                                    if (_formKey.currentState!.validate()) {
+                                      cubit.postLogin(
+                                          email: emailcontroller.text,
+                                          password: pwcontroller.text);
+                                    }
                                   }
                                 },
-                                child: Text(
-                                  'Login',
-                                  style: TextStyle(color: Colors.white),
-                                ),
+                                text: 'login',
+                                isUperCase: true,
+                                radius: 15,
+                              ),
+                              fallbackBuilder: (context) => Center(
+                                child: CircularProgressIndicator(),
                               ),
                             ),
                           ),
