@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shop_app/components.dart';
 import 'package:shop_app/login/bloc/cubit_login.dart';
 import 'package:shop_app/login/bloc/states_login.dart';
@@ -27,8 +28,24 @@ class Login extends StatelessWidget {
               print(state.shopLoginModel?.data!.token);
 
               print(state.shopLoginModel?.msg);
+              Fluttertoast.showToast(
+                  msg: '${state.shopLoginModel?.msg}',
+                  toastLength: Toast.LENGTH_LONG,
+                  gravity: ToastGravity.TOP_RIGHT,
+                  timeInSecForIosWeb: 5,
+                  backgroundColor: Colors.green,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
             } else {
               print(state.shopLoginModel?.msg);
+              Fluttertoast.showToast(
+                  msg: '${state.shopLoginModel?.msg}',
+                  toastLength: Toast.LENGTH_LONG,
+                  gravity: ToastGravity.TOP_RIGHT,
+                  timeInSecForIosWeb: 5,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
             }
           }
         }, builder: (context, state) {
