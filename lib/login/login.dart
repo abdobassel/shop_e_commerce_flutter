@@ -82,12 +82,10 @@ class Login extends StatelessWidget {
                                       }
                                     },
                                     onSubmit: (value) {
-                                      if (_formKey.currentState != null) {
-                                        if (_formKey.currentState!.validate()) {
-                                          cubit.postLogin(
-                                              email: emailcontroller.text,
-                                              password: pwcontroller.text);
-                                        }
+                                      if (_formKey.currentState!.validate()) {
+                                        cubit.postLogin(
+                                            email: emailcontroller.text,
+                                            password: pwcontroller.text);
                                       }
                                     },
                                     type: TextInputType.visiblePassword,
@@ -105,12 +103,10 @@ class Login extends StatelessWidget {
                                   state is! LoginLoadingState,
                               widgetBuilder: (context) => DefaultButton(
                                 function: () {
-                                  if (_formKey.currentState != null) {
-                                    if (_formKey.currentState!.validate()) {
-                                      cubit.postLogin(
-                                          email: emailcontroller.text,
-                                          password: pwcontroller.text);
-                                    }
+                                  if (_formKey.currentState!.validate()) {
+                                    cubit.postLogin(
+                                        email: emailcontroller.text,
+                                        password: pwcontroller.text);
                                   }
                                 },
                                 text: 'login',

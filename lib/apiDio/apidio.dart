@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 
 class DioHelper {
   static Dio dio = Dio();
-  static void init() {
+  static init() {
     dio = Dio(
       BaseOptions(
           headers: {
@@ -33,10 +33,10 @@ class DioHelper {
     String? token,
   }) async {
     dio.options.headers = {'lang': lang, 'Authorization': token};
-    return await dio.post(
-      url,
-      data: data,
-      queryParameters: query,
-    );
+    return await dio.post(url,
+        data: data,
+        queryParameters: query,
+        options: Options(
+            headers: {'Content-type': 'application/json; charset=UTF-8'}));
   }
 }

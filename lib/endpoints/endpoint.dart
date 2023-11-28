@@ -1,2 +1,2 @@
-const LOGIN = 'login';
+const String LOGIN = 'login';
 //https://student.valuxapps.com/api/

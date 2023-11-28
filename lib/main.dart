@@ -6,9 +6,10 @@ import 'package:shop_app/onBoaring/onboarding_screen.dart';
 import 'package:shop_app/shared/themes.dart';
 
 void main() {
-  DioHelper.init();
   Bloc.observer = MyBlocObserver();
-  runApp(const Shop());
+  DioHelper.init();
+
+  runApp(Shop());
 }
 
 class Shop extends StatelessWidget {
