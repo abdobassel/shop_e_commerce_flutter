@@ -6,7 +6,6 @@ import 'package:shop_app/components.dart';
 import 'package:shop_app/login/bloc/cubit_login.dart';
 import 'package:shop_app/login/bloc/states_login.dart';
 import 'package:shop_app/login/register.dart';
-import 'package:shop_app/models/shoploginModels/login_model.dart';
 
 class Login extends StatelessWidget {
   var emailcontroller = TextEditingController();

@@ -1,3 +1,4 @@
+//data of all big login response
 class ShopLoginModel {
   bool? status;
   String? msg;
@@ -9,8 +10,10 @@ class ShopLoginModel {
   }
 }
 
+// user data = data in top model
 class ShopUserData {
   int? id;
+  String? email;
   String? name;
   String? token;
   String? phone;
@@ -21,6 +24,7 @@ class ShopUserData {
   ShopUserData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
+    email = json['email'];
     token = json['token'];
     phone = json['phone'];
     img = json['image'];
