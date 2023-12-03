@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shop_app/cache_helper/cache_helper.dart';
 import 'package:shop_app/components.dart';
+import 'package:shop_app/layout/home_shop.dart';
 import 'package:shop_app/login/bloc/cubit_login.dart';
 import 'package:shop_app/login/bloc/states_login.dart';
 import 'package:shop_app/login/register.dart';
@@ -27,14 +29,17 @@ class Login extends StatelessWidget {
               print(state.shopLoginModel?.data!.token);
 
               print(state.shopLoginModel?.msg);
-              Fluttertoast.showToast(
-                  msg: '${state.shopLoginModel?.msg}',
-                  toastLength: Toast.LENGTH_LONG,
-                  gravity: ToastGravity.TOP_RIGHT,
-                  timeInSecForIosWeb: 5,
-                  backgroundColor: Colors.green,
-                  textColor: Colors.white,
-                  fontSize: 16.0);
+              cacheHelper
+                  .saveData(
+                      key: 'token', value: state.shopLoginModel?.data!.token)
+                  ?.then((value) {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Shop_Home(),
+                    ),
+                    (route) => false);
+              });
             } else {
               print(state.shopLoginModel?.msg);
               Fluttertoast.showToast(
