@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app/apiDio/apidio.dart';
 import 'package:shop_app/bloc_observer.dart';
+import 'package:shop_app/bloc_shop/cubit.dart';
+import 'package:shop_app/bloc_shop/states.dart';
 import 'package:shop_app/cache_helper/cache_helper.dart';
 import 'package:shop_app/layout/home_shop.dart';
 import 'package:shop_app/login/login.dart';
@@ -14,7 +16,7 @@ void main() async {
   await cacheHelper.init();
   bool onBoarding = cacheHelper.getData(key: 'onBoarding') ?? false;
 
-  String token = cacheHelper.getData(key: 'token') ?? false;
+  String? token = cacheHelper.getData(key: 'token');
   Widget widget;
   if (onBoarding != null) {
     if (token != null) {
@@ -40,10 +42,15 @@ class Shop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: startWidget,
-      theme: lightTheme,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => ShopCubit(ShopInitializeState())),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: startWidget,
+        theme: lightTheme,
+      ),
     );
   }
 }
