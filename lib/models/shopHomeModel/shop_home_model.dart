@@ -49,5 +49,6 @@ class ProductModel {
     img = json['image'];
     incart = json['in_cart'];
     infav = json['in_favourites'];
+    name = json['name'];
   }
 }
