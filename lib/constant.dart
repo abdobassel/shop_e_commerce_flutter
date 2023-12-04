@@ -25,4 +25,4 @@ void SignOut(context) {
   });
 }
 
-String token = '';
+String? token = '';
