@@ -24,3 +24,5 @@ void SignOut(context) {
     }
   });
 }
+
+String token = '';

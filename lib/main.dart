@@ -5,6 +5,7 @@ import 'package:shop_app/bloc_observer.dart';
 import 'package:shop_app/bloc_shop/cubit.dart';
 import 'package:shop_app/bloc_shop/states.dart';
 import 'package:shop_app/cache_helper/cache_helper.dart';
+import 'package:shop_app/constant.dart';
 import 'package:shop_app/layout/home_shop.dart';
 import 'package:shop_app/login/login.dart';
 import 'package:shop_app/onBoaring/onboarding_screen.dart';
@@ -16,7 +17,7 @@ void main() async {
   await cacheHelper.init();
   bool onBoarding = cacheHelper.getData(key: 'onBoarding') ?? false;
 
-  String? token = cacheHelper.getData(key: 'token');
+  token = cacheHelper.getData(key: 'token');
   Widget widget;
   if (onBoarding != null) {
     if (token != null) {
@@ -28,8 +29,8 @@ void main() async {
     widget = onBoardingScreen();
   }
 
-  print(onBoarding);
-  print(token);
+  //print(onBoarding);
+  // print(token);
   DioHelper.init();
 // runApp(Shop(onBoarding: onBoarding));
   runApp(Shop(startWidget: widget));
@@ -44,7 +45,8 @@ class Shop extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => ShopCubit(ShopInitializeState())),
+        BlocProvider(
+            create: (context) => ShopCubit(ShopInitializeState())..getData()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

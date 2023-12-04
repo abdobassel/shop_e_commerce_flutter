@@ -24,7 +24,12 @@ class Shop_Home extends StatelessWidget {
                     return SearchScreen();
                   }));
                 },
-                icon: Icon(Icons.search))
+                icon: Icon(Icons.search)),
+            TextButton(
+                onPressed: () {
+                  SignOut(context);
+                },
+                child: Text('out'))
           ], title: Text('Bassel')),
           body: cubitshop.screensShop[cubitshop.IndexShopScreens],
           bottomNavigationBar: BottomNavigationBar(
