@@ -46,7 +46,9 @@ class Shop extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-            create: (context) => ShopCubit(ShopInitializeState())..getData()),
+            create: (context) => ShopCubit(ShopInitializeState())
+              ..getData()
+              ..getCategoriesData()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

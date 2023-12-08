@@ -31,6 +31,7 @@ class ProductsScreen extends StatelessWidget {
   Widget productsBuilder(HomeModel model) => SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CarouselSlider(
               items: model.data?.banners
@@ -54,14 +55,49 @@ class ProductsScreen extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 10,
+              height: 20,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Categories',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    height: 100,
+                    child: ListView.separated(
+                        physics: BouncingScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return CategoryItemBuilder();
+                        },
+                        separatorBuilder: (context, index) => SizedBox(
+                              width: 14,
+                            ),
+                        itemCount: 10),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Text('New Products',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
+                ],
+              ),
             ),
             Container(
               color: Colors.grey[300],
               child: GridView.count(
                   mainAxisSpacing: 1.0,
                   crossAxisSpacing: 1.0,
-                  childAspectRatio: 1 / 1.46,
+                  childAspectRatio: 1 / 1.59,
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   crossAxisCount: 2,
@@ -74,22 +110,60 @@ class ProductsScreen extends StatelessWidget {
         ),
       );
 
+  Widget CategoryItemBuilder() =>
+      Stack(alignment: AlignmentDirectional.bottomCenter, children: [
+        Image(
+          width: 100,
+          fit: BoxFit.cover,
+          height: 100,
+          image: 1 == 1
+              ? NetworkImage(
+                  NullImg,
+                )
+              : NetworkImage(NullImg),
+        ),
+        Container(
+            color: Colors.black.withOpacity(.8),
+            width: 100,
+            child: Text(
+              'Eloctric',
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              style: TextStyle(color: Colors.white),
+            )),
+      ]);
+
   Widget GridProductBuilder(ProductModel model) => Container(
         color: Colors.white,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image(
-              width: double.infinity,
-              height: 200,
-              image: model.img != null
-                  ? NetworkImage(
-                      '${model.img}',
-                    )
-                  : NetworkImage(NullImg),
+            Stack(
+              alignment: AlignmentDirectional.topStart,
+              children: [
+                Image(
+                  width: double.infinity,
+                  height: 200,
+                  image: model.img != null
+                      ? NetworkImage(
+                          '${model.img}',
+                        )
+                      : NetworkImage(NullImg),
+                ),
+                if (model.discount != 0)
+                  Container(
+                    child: Text(
+                      'DESCOUNT',
+                      style: TextStyle(fontSize: 10, color: Colors.white),
+                    ),
+                    color: Colors.red,
+                    padding: EdgeInsets.symmetric(horizontal: 5.0),
+                  )
+              ],
             ),
             Padding(
-              padding: const EdgeInsets.all(12.0),
+              padding: const EdgeInsets.all(10.0),
               child: Column(
                 children: [
                   Text(
@@ -122,6 +196,9 @@ class ProductsScreen extends StatelessWidget {
                             decoration: TextDecoration.lineThrough,
                           ),
                         ),
+                      Spacer(),
+                      IconButton(
+                          onPressed: () {}, icon: Icon(Icons.favorite_outline)),
                     ],
                   ),
                 ],

@@ -29,7 +29,10 @@ class Shop_Home extends StatelessWidget {
                 onPressed: () {
                   SignOut(context);
                 },
-                child: Text('out'))
+                child: Text(
+                  'LogOut',
+                  style: TextStyle(fontSize: 18),
+                ))
           ], title: Text('Bassel')),
           body: cubitshop.screensShop[cubitshop.IndexShopScreens],
           bottomNavigationBar: BottomNavigationBar(
