@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:shop_app/bloc_shop/cubit.dart';
 import 'package:shop_app/bloc_shop/states.dart';
+import 'package:shop_app/models/categoriesModels/cat_model.dart';
 import 'package:shop_app/models/shopHomeModel/shop_home_model.dart';
 
 class ProductsScreen extends StatelessWidget {
@@ -17,9 +18,11 @@ class ProductsScreen extends StatelessWidget {
         return Conditional.single(
           context: context,
           conditionBuilder: (context) =>
-              ShopCubit.get(context).homeModel != null,
-          widgetBuilder: (context) =>
-              productsBuilder(ShopCubit.get(context).homeModel!),
+              ShopCubit.get(context).homeModel != null &&
+              ShopCubit.get(context).catModel != null,
+          widgetBuilder: (context) => productsBuilder(
+              ShopCubit.get(context).homeModel!,
+              ShopCubit.get(context).catModel!),
           fallbackBuilder: (context) => Center(
             child: CircularProgressIndicator(),
           ),
@@ -28,7 +31,8 @@ class ProductsScreen extends StatelessWidget {
     );
   }
 
-  Widget productsBuilder(HomeModel model) => SingleChildScrollView(
+  Widget productsBuilder(HomeModel model, CatModel catModel) =>
+      SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,12 +80,13 @@ class ProductsScreen extends StatelessWidget {
                         scrollDirection: Axis.horizontal,
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
-                          return CategoryItemBuilder();
+                          return CategoryItemBuilder(
+                              catModel.data!.data[index]);
                         },
                         separatorBuilder: (context, index) => SizedBox(
                               width: 14,
                             ),
-                        itemCount: 10),
+                        itemCount: catModel.data!.data.length),
                   ),
                   SizedBox(
                     height: 15,
@@ -110,15 +115,15 @@ class ProductsScreen extends StatelessWidget {
         ),
       );
 
-  Widget CategoryItemBuilder() =>
+  Widget CategoryItemBuilder(DataModel dataModel) =>
       Stack(alignment: AlignmentDirectional.bottomCenter, children: [
         Image(
           width: 100,
           fit: BoxFit.cover,
           height: 100,
-          image: 1 == 1
+          image: dataModel.img != null
               ? NetworkImage(
-                  NullImg,
+                  '${dataModel.img}',
                 )
               : NetworkImage(NullImg),
         ),
@@ -126,7 +131,7 @@ class ProductsScreen extends StatelessWidget {
             color: Colors.black.withOpacity(.8),
             width: 100,
             child: Text(
-              'Eloctric',
+              '${dataModel.name}',
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
               maxLines: 1,

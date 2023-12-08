@@ -49,7 +49,7 @@ class ShopCubit extends Cubit<ShopStates> {
 
   CatModel? catModel;
   void getCategoriesData() {
-    DioHelper.getData(url: Home, lang: 'en').then((value) {
+    DioHelper.getData(url: Get_CATEGORIES, lang: 'en').then((value) {
       catModel = CatModel.fromJson(value.data);
 
       emit(ShopSuccesDataCategoriesState());

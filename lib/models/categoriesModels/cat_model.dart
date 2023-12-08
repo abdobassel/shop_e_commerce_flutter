@@ -12,8 +12,9 @@ class CatDataModel {
   List<DataModel> data = [];
   CatDataModel.fromJson(Map<String, dynamic> json) {
     currentPage = json['current_page'];
-    json['data'].forEach((e) {
-      data.add(DataModel.fromJson(e));
+
+    json['data'].forEach((element) {
+      data.add(DataModel.fromJson(element));
     });
   }
 }
