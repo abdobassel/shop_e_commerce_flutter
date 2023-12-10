@@ -4,6 +4,7 @@ import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shop_app/cache_helper/cache_helper.dart';
 import 'package:shop_app/components.dart';
+import 'package:shop_app/constant.dart';
 import 'package:shop_app/layout/home_shop.dart';
 import 'package:shop_app/login/bloc/cubit_login.dart';
 import 'package:shop_app/login/bloc/states_login.dart';
@@ -33,10 +34,11 @@ class Login extends StatelessWidget {
                   .saveData(
                       key: 'token', value: state.shopLoginModel?.data!.token)
                   ?.then((value) {
+                token = state.shopLoginModel?.data!.token;
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Shop_Home(),
+                      builder: (context) => const Shop_Home(),
                     ),
                     (route) => false);
               });

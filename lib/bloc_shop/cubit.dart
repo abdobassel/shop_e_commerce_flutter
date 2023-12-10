@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_app/apiDio/apidio.dart';
 import 'package:shop_app/bloc_shop/states.dart';
+import 'package:shop_app/cache_helper/cache_helper.dart';
 import 'package:shop_app/constant.dart';
 import 'package:shop_app/endpoints/endpoint.dart';
 import 'package:shop_app/layout/categories/categories.dart';
@@ -11,6 +12,7 @@ import 'package:shop_app/layout/settings/settings.dart';
 import 'package:shop_app/models/categoriesModels/cat_model.dart';
 import 'package:shop_app/models/shopHomeModel/favoritesmodel/changefavoritemodel.dart';
 import 'package:shop_app/models/shopHomeModel/shop_home_model.dart';
+import 'package:shop_app/models/shoploginModels/login_model.dart';
 
 class ShopCubit extends Cubit<ShopStates> {
   ShopCubit(super.initialState);
@@ -89,6 +91,23 @@ class ShopCubit extends Cubit<ShopStates> {
     }).catchError((error) {
       favs[productId] = !favs[productId]!;
       emit(ShopErrorChangeFavoritesState(error: '${error.toString()}'));
+    });
+  }
+
+  // profile data in settings screen
+  ShopLoginModel? userProfileModel;
+  void getUserProfile() {
+    emit(ShopProfileLoadingState());
+    DioHelper.getData(url: PROFILE, token: token).then((value) {
+      userProfileModel = ShopLoginModel.fromJson(value.data);
+      print(userProfileModel?.data!.email);
+
+      print(userProfileModel?.data!.phone);
+
+      print(userProfileModel?.data!.name);
+      emit(ShopGetUserProfileDataSuccessState());
+    }).catchError((error) {
+      emit(ShopGetProfileErrorState(error: error.toString()));
     });
   }
 }
