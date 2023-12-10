@@ -8,6 +8,7 @@ import 'package:shop_app/cache_helper/cache_helper.dart';
 import 'package:shop_app/constant.dart';
 import 'package:shop_app/layout/home_shop.dart';
 import 'package:shop_app/login/login.dart';
+
 import 'package:shop_app/onBoaring/onboarding_screen.dart';
 import 'package:shop_app/shared/themes.dart';
 
@@ -15,13 +16,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
   await cacheHelper.init();
-  bool onBoarding = cacheHelper.getData(key: 'onBoarding') ?? false;
+  bool? onBoarding = cacheHelper.getData(key: 'onBoarding');
 
   token = cacheHelper.getData(key: 'token');
   Widget widget;
   if (onBoarding != null) {
     if (token != null) {
-      widget = Shop_Home();
+      widget = const Shop_Home();
     } else {
       widget = Login();
     }
@@ -49,6 +50,8 @@ class Shop extends StatelessWidget {
             create: (context) => ShopCubit(ShopInitializeState())
               ..getData()
               ..getCategoriesData()),
+        //  BlocProvider(
+        //  create: (context) => RegisterCubit(RegisteritState())..re),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

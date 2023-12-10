@@ -22,7 +22,8 @@ class ProductsScreen extends StatelessWidget {
               ShopCubit.get(context).catModel != null,
           widgetBuilder: (context) => productsBuilder(
               ShopCubit.get(context).homeModel!,
-              ShopCubit.get(context).catModel!),
+              ShopCubit.get(context).catModel!,
+              context),
           fallbackBuilder: (context) => Center(
             child: CircularProgressIndicator(),
           ),
@@ -31,7 +32,7 @@ class ProductsScreen extends StatelessWidget {
     );
   }
 
-  Widget productsBuilder(HomeModel model, CatModel catModel) =>
+  Widget productsBuilder(HomeModel model, CatModel catModel, context) =>
       SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
@@ -101,15 +102,15 @@ class ProductsScreen extends StatelessWidget {
               color: Colors.grey[300],
               child: GridView.count(
                   mainAxisSpacing: 1.0,
-                  crossAxisSpacing: 1.0,
-                  childAspectRatio: 1 / 1.59,
+                  crossAxisSpacing: 1.40,
+                  childAspectRatio: 1 / 1.75,
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   crossAxisCount: 2,
                   children: List.generate(
                       model.data!.proudcts.length,
-                      (index) =>
-                          GridProductBuilder(model.data!.proudcts[index]))),
+                      (index) => GridProductBuilder(
+                          model.data!.proudcts[index], context))),
             ),
           ],
         ),
@@ -139,7 +140,7 @@ class ProductsScreen extends StatelessWidget {
             )),
       ]);
 
-  Widget GridProductBuilder(ProductModel model) => Container(
+  Widget GridProductBuilder(ProductModel model, context) => Container(
         color: Colors.white,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -190,7 +191,7 @@ class ProductsScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        width: 10,
+                        width: 7,
                       ),
                       if (model.discount != 0)
                         Text(
@@ -202,8 +203,21 @@ class ProductsScreen extends StatelessWidget {
                           ),
                         ),
                       Spacer(),
-                      IconButton(
-                          onPressed: () {}, icon: Icon(Icons.favorite_outline)),
+                      CircleAvatar(
+                        radius: 20.0,
+                        backgroundColor: ShopCubit.get(context).favs[model.id]!
+                            ? Colors.green
+                            : Colors.grey,
+                        child: IconButton(
+                            onPressed: () {
+                              ShopCubit.get(context).change_favorites(model.id);
+                              print(model.id);
+                            },
+                            icon: Icon(
+                              Icons.favorite_outline,
+                              color: Colors.white,
+                            )),
+                      ),
                     ],
                   ),
                 ],
