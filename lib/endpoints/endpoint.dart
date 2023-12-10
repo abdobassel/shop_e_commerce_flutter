@@ -8,6 +8,7 @@ const String Get_CATEGORIES = 'categories';
 const String FAVOURITES = 'favorites';
 
 const String PROFILE = 'profile';
+const String UPDATE_PROFILE = 'update-profile';
 
 
 

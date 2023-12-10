@@ -41,3 +41,13 @@ class ShopGetProfileErrorState extends ShopStates {
 
   ShopGetProfileErrorState({required this.error});
 }
+
+class ShopUpdateUserProfileDataSuccessState extends ShopStates {}
+
+class ShopUpdateProfileLoadingState extends ShopStates {}
+
+class ShopUpdateProfileErrorState extends ShopStates {
+  final String error;
+
+  ShopUpdateProfileErrorState({required this.error});
+}
