@@ -1,18 +1,54 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shop_app/components.dart';
+import 'package:shop_app/layout/search/cubit/search_cubit.dart';
 
 class SearchScreen extends StatelessWidget {
-  const SearchScreen({super.key});
-
+  SearchScreen({super.key});
+  var formKey = GlobalKey<FormState>();
+  var searchContr = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Search'),
-      ),
-      body: Center(
-        child: Text('search'),
+    return BlocProvider(
+      create: (context) => SearchCubit(),
+      child: BlocConsumer<SearchCubit, SearchState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          return Scaffold(
+            appBar: AppBar(),
+            body: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      children: [
+                        DefaultTextForm(
+                            onSubmit: (s) {
+                              SearchCubit.get(context).getSearch(text: s!);
+                            },
+                            controller: searchContr,
+                            labeltext: 'Search...',
+                            validate: (value) {
+                              if (value != null) {
+                                if (value.isNotEmpty) {
+                                  return 'noo';
+                                }
+                                return null;
+                              }
+                            },
+                            type: TextInputType.text,
+                            prefix: Icons.search)
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }

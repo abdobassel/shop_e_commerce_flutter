@@ -16,11 +16,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
   await cacheHelper.init();
-  bool? onBoarding = cacheHelper.getData(key: 'onBoarding');
+  bool onBoarding = cacheHelper.getData(key: 'onBoarding');
 
   token = cacheHelper.getData(key: 'token');
   Widget widget;
-  if (onBoarding != null) {
+  if (onBoarding) {
     if (token != null) {
       widget = const Shop_Home();
     } else {

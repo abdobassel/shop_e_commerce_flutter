@@ -9,7 +9,6 @@ const String FAVOURITES = 'favorites';
 
 const String PROFILE = 'profile';
 const String UPDATE_PROFILE = 'update-profile';
-
-
+const String Search = 'products/search';
 
 //https://student.valuxapps.com/api/
