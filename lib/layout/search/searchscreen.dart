@@ -19,6 +19,8 @@ class SearchScreen extends StatelessWidget {
             BlocConsumer<SearchCubit, SearchState>(listener: (context, state) {
           if (state is SearchSuccess) {
             searchlist = state.searchs;
+          } else {
+            searchlist = [];
           }
         }, builder: (context, state) {
           return Scaffold(
@@ -54,61 +56,68 @@ class SearchScreen extends StatelessWidget {
                       SizedBox(
                         height: 5,
                       ),
-                      Expanded(
-                        child: ListView.separated(
-                            shrinkWrap: true,
-                            separatorBuilder: (context, index) => Container(
-                                  width: double.infinity,
-                                  color: Colors.black12,
-                                  height: 4,
-                                ),
-                            physics: BouncingScrollPhysics(),
-                            itemCount: searchlist.length,
-                            itemBuilder: (context, index) => Padding(
-                                  padding: const EdgeInsets.all(15.0),
-                                  child: Container(
-                                    height: 100,
+                      if (state is! SearchLoading)
+                        Expanded(
+                          child: ListView.separated(
+                              shrinkWrap: true,
+                              separatorBuilder: (context, index) => Container(
                                     width: double.infinity,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Image.network(
-                                          '${searchlist[index].image}',
-                                          fit: BoxFit.cover,
-                                          height: 100,
-                                          width: 100,
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                '${searchlist[index].name}',
-                                                maxLines: 2,
-                                                style: TextStyle(
-                                                    fontSize: 20,
-                                                    color: Colors.blue),
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                              Spacer(),
-                                              Text(
-                                                r'السعر '
-                                                '${searchlist[index].price}',
-                                                style: TextStyle(fontSize: 20),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                    color: Colors.black12,
+                                    height: 4,
                                   ),
-                                )),
-                      ),
+                              physics: BouncingScrollPhysics(),
+                              itemCount: searchlist.length,
+                              itemBuilder: (context, index) => Padding(
+                                    padding: const EdgeInsets.all(15.0),
+                                    child: Container(
+                                      height: 100,
+                                      width: double.infinity,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Image.network(
+                                            '${searchlist[index].image}',
+                                            fit: BoxFit.cover,
+                                            height: 100,
+                                            width: 100,
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  '${searchlist[index].name}',
+                                                  maxLines: 2,
+                                                  style: TextStyle(
+                                                      fontSize: 20,
+                                                      color: Colors.blue),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                                Spacer(),
+                                                Text(
+                                                  r'السعر '
+                                                  '${searchlist[index].price}',
+                                                  style:
+                                                      TextStyle(fontSize: 20),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )),
+                        ),
+                      if (state is SearchLoading)
+                        Center(
+                          child: CircularProgressIndicator(),
+                        ),
                     ]),
               ));
         }));

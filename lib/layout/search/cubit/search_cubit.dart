@@ -16,6 +16,8 @@ class SearchCubit extends Cubit<SearchState> {
   List<dynamic> searchList = [];
   List<SarchModel> searchListModel = [];
   void getSearch({required String text}) async {
+    searchListModel = [];
+    searchList = [];
     emit(SearchLoading());
     await DioHelper.postData(
             url: Search,
