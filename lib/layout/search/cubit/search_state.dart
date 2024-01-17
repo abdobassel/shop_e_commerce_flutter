@@ -7,7 +7,10 @@ final class SearchInitial extends SearchState {}
 
 class SearchLoading extends SearchState {}
 
-class SearchSuccess extends SearchState {}
+class SearchSuccess extends SearchState {
+  List<SarchModel> searchs;
+  SearchSuccess(this.searchs);
+}
 
 class SearchError extends SearchState {
   final String error;

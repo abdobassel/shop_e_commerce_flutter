@@ -1,6 +1,6 @@
 class SarchModel {
   int? id;
-  double? price;
+  dynamic price;
   String? image;
   String? name;
   String? description;
@@ -21,7 +21,7 @@ class SarchModel {
 
   factory SarchModel.fromJson(Map<String, dynamic> json) => SarchModel(
         id: json['id'] as int?,
-        price: (json['price'] as num?)?.toDouble(),
+        price: json['price'] as dynamic,
         image: json['image'] as String?,
         name: json['name'] as String?,
         description: json['description'] as String?,

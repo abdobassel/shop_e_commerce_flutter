@@ -12,12 +12,12 @@ part 'search_state.dart';
 class SearchCubit extends Cubit<SearchState> {
   SearchCubit() : super(SearchInitial());
   static SearchCubit get(context) => BlocProvider.of(context);
-  SarchModel? sarchModel;
+
   List<dynamic> searchList = [];
   List<SarchModel> searchListModel = [];
-  void getSearch({required String text}) {
+  void getSearch({required String text}) async {
     emit(SearchLoading());
-    DioHelper.postData(
+    await DioHelper.postData(
             url: Search,
             data: {
               'text': text,
@@ -29,10 +29,9 @@ class SearchCubit extends Cubit<SearchState> {
       });
       searchList.forEach((element) {
         searchListModel.add(SarchModel.fromJson(element));
-        // sarchModel = SarchModel.fromJson(element);
       });
-      print(sarchModel!.image);
-      emit(SearchSuccess());
+
+      emit(SearchSuccess(searchListModel));
     }).catchError((error) {
       print(error.toString());
       emit(SearchError(error.toString()));
