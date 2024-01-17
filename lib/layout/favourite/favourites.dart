@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:shop_app/bloc_shop/cubit.dart';
 import 'package:shop_app/bloc_shop/states.dart';
 import 'package:shop_app/layout/products/products_screen.dart';
@@ -13,16 +14,31 @@ class FavouriteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<ShopCubit, ShopStates>(
         builder: (context, state) {
-          return ListView.separated(
-              physics: BouncingScrollPhysics(),
-              itemBuilder: (context, index) => favoriteItem(
-                  ShopCubit.get(context).favoriteSModel!.data!.data![index]),
-              separatorBuilder: (context, state) => Container(
-                    color: Colors.blueGrey,
-                    height: 4,
+          return Conditional.single(
+              context: context,
+              conditionBuilder: (context) =>
+                  state is! ShopLoadingGetFavoritesState,
+              fallbackBuilder: (context) => const Center(
+                    child: CircularProgressIndicator(),
                   ),
-              itemCount:
-                  ShopCubit.get(context).favoriteSModel!.data!.data!.length);
+              widgetBuilder: (context) {
+                return ListView.separated(
+                    physics: BouncingScrollPhysics(),
+                    itemBuilder: (context, index) => favoriteItem(
+                        ShopCubit.get(context)
+                            .favoriteSModel!
+                            .data!
+                            .data![index]),
+                    separatorBuilder: (context, state) => Container(
+                          color: Colors.blueGrey,
+                          height: 4,
+                        ),
+                    itemCount: ShopCubit.get(context)
+                        .favoriteSModel!
+                        .data!
+                        .data!
+                        .length);
+              });
         },
         listener: (context, state) {});
   }
