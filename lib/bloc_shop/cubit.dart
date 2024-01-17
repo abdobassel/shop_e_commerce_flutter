@@ -10,6 +10,7 @@ import 'package:shop_app/layout/favourite/favourites.dart';
 import 'package:shop_app/layout/products/products_screen.dart';
 import 'package:shop_app/layout/settings/settings.dart';
 import 'package:shop_app/models/categoriesModels/cat_model.dart';
+import 'package:shop_app/models/favoriteModel/favorite_model/favorite_model.dart';
 import 'package:shop_app/models/shopHomeModel/favoritesmodel/changefavoritemodel.dart';
 import 'package:shop_app/models/shopHomeModel/shop_home_model.dart';
 import 'package:shop_app/models/shoploginModels/login_model.dart';
@@ -70,6 +71,22 @@ class ShopCubit extends Cubit<ShopStates> {
     });
   }
 
+  // get favorites
+
+  FavoriteSModel? favoriteSModel;
+  void getFavoritesData() {
+    emit(ShopLoadingGetFavoritesState());
+    DioHelper.getData(url: FAVOURITES, lang: 'en', token: token).then((value) {
+      favoriteSModel = FavoriteSModel.fromJson(value.data);
+      print(value.data.toString());
+
+      emit(ShopSuccesGetFavoritesState());
+    }).catchError((error) {
+      print(error.toString());
+      emit(ShopErrorGetFavoritesState(error.toString()));
+    });
+  }
+
   //favourites add or delete fav item
   FavoriteModel? favoriteModel;
   void change_favorites(int? productId) {
@@ -86,6 +103,8 @@ class ShopCubit extends Cubit<ShopStates> {
       print(value.data);
       if (!favoriteModel!.status!) {
         favs[productId] = !favs[productId]!;
+      } else {
+        getFavoritesData();
       }
       emit(ShopSuccesChangeFavoritesState());
     }).catchError((error) {

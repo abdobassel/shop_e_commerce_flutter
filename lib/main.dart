@@ -50,6 +50,7 @@ class Shop extends StatelessWidget {
             create: (context) => ShopCubit(ShopInitializeState())
               ..getData()
               ..getCategoriesData()
+              ..getFavoritesData()
               ..getUserProfile()),
         //  BlocProvider(
         //  create: (context) => RegisterCubit(RegisteritState())..re),
