@@ -19,6 +19,7 @@ class SearchCubit extends Cubit<SearchState> {
     emit(SearchLoading());
     await DioHelper.postData(
             url: Search,
+            lang: 'en',
             data: {
               'text': text,
             },

@@ -25,41 +25,98 @@ class SearchScreen extends StatelessWidget {
               appBar: AppBar(),
               body: Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: SingleChildScrollView(
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Form(
-                          key: formKey,
-                          child: Column(
-                            children: [
-                              DefaultTextForm(
-                                  onchange: (s) {
-                                    SearchCubit.get(context)
-                                        .getSearch(text: s!);
-                                  },
-                                  controller: searchContr,
-                                  labeltext: 'Search...',
-                                  validate: (value) {
-                                    if (value != null) {
-                                      if (value.isNotEmpty) {
-                                        return 'noo';
-                                      }
-                                      return null;
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Form(
+                        key: formKey,
+                        child: Column(
+                          children: [
+                            DefaultTextForm(
+                                onSubmit: (s) {
+                                  SearchCubit.get(context).getSearch(text: s!);
+                                },
+                                controller: searchContr,
+                                labeltext: 'Search...',
+                                validate: (value) {
+                                  if (value != null) {
+                                    if (value.isNotEmpty) {
+                                      return 'noo';
                                     }
-                                  },
-                                  type: TextInputType.text,
-                                  prefix: Icons.search)
-                            ],
-                          ),
+                                    return null;
+                                  }
+                                },
+                                type: TextInputType.text,
+                                prefix: Icons.search)
+                          ],
                         ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Expanded(
+                        child: ListView.separated(
+                            shrinkWrap: true,
+                            separatorBuilder: (context, index) => Container(
+                                  width: double.infinity,
+                                  color: Colors.black12,
+                                  height: 4,
+                                ),
+                            physics: BouncingScrollPhysics(),
                             itemCount: searchlist.length,
                             itemBuilder: (context, index) => Padding(
+                                  padding: const EdgeInsets.all(15.0),
+                                  child: Container(
+                                    height: 100,
+                                    width: double.infinity,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Image.network(
+                                          '${searchlist[index].image}',
+                                          fit: BoxFit.cover,
+                                          height: 100,
+                                          width: 100,
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                '${searchlist[index].name}',
+                                                maxLines: 2,
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.blue),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                              Spacer(),
+                                              Text(
+                                                r'السعر '
+                                                '${searchlist[index].price}',
+                                                style: TextStyle(fontSize: 20),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )),
+                      ),
+                    ]),
+              ));
+        }));
+  }
+}
+
+/*
+Padding(
                                   padding: EdgeInsets.all(20),
                                   child: Container(
                                     height: 160,
@@ -116,10 +173,6 @@ class SearchScreen extends StatelessWidget {
                                       ],
                                     ),
                                   ),
-                                )),
-                      ]),
-                ),
-              ));
-        }));
-  }
-}
+                                )
+
+ */
